@@ -1,0 +1,9 @@
+{
+  "name": "dj-store",
+  "version": "1.0.0",
+  "description": "test layout js, scss, webpack",
+  "main": "index.js",
+  "repository": "https://github.com/Dem0nZ/djStoreTest",
+  "author": "Dem0nZ <cbpskov@gmail.com>",
+  "license": "MIT"
+}
