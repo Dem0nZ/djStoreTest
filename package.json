@@ -7,16 +7,18 @@
   "author": "Dem0nZ <cbpskov@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack serve"
+    "build": "webpack --config webpack.prod.js",
+    "start": "webpack serve --open --config webpack.dev.js"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.2",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.2.4",
     "html-webpack-plugin": "^5.3.1",
+    "mini-css-extract-plugin": "^1.6.0",
     "sass": "^1.32.13",
     "sass-loader": "^11.1.1",
     "style-loader": "^2.0.0",
@@ -24,5 +26,8 @@
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3"
+  },
+  "dependencies": {
+    "normalize.css": "^8.0.1"
   }
 }
