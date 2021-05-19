@@ -3,7 +3,6 @@
 .header {
   display: flex;
   justify-content: center;
-  align-items: center;
   height: 96px;
   .logo{
     height: 32px;
@@ -36,14 +35,17 @@
         margin: 36px auto 0 auto;
         display: flex;
         content: "";
-        width: 90%;
+        width: 0;
         height: 4px;
-        visibility: hidden;
         border-radius: 6px;
         background-color: $themePrimaryColor;
       }
       :active:after {
-        visibility: visible;
+        width: 90%;
+      }
+      :hover:after{
+        width: 90%;
+        transition: width .3s;
       }
       :visited{
         color: $fontColor;
