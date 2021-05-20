@@ -1,3 +1,9 @@
 $themePrimaryColor: #397dff;
 $fontColor: rgba(43, 45, 58, .7);
 $background: #ebeef5;
+
+%button {
+  background: $themePrimaryColor;
+  border-radius: 8px;
+  color: white;
+}

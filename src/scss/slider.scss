@@ -1,1 +1,145 @@
 @import "variables";
+
+.slider {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+      z-index: -1;
+  }
+
+  .title {
+    margin-top: 123px;
+    width: 590px;
+    color: white;
+
+    h1 {
+      margin-left: -4px;
+      font-size: 52px;
+      font-weight: 600;
+    }
+
+    h2 {
+      font-weight: 500;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 148%;
+      opacity: .8;
+      margin-top: 24px;
+    }
+
+    .buttons {
+      margin-top: 54px;
+
+      button {
+        @extend %button;
+        height: 48px;
+        width: 186px;
+      }
+      .callback{
+        background: none;
+        border: 1px solid white;
+        margin-right: 24px;
+      }
+      .brief{
+        border: none;
+      }
+    }
+  }
+  .right-side {
+    display: flex;
+    flex-direction: column;
+    margin-top: 214px;
+    width: 515px;
+
+
+    .slider-hider {
+      overflow: hidden;
+
+      .slides {
+        list-style: none;
+        display: flex;
+        justify-content: flex-start;
+        margin-left: -34px;
+
+
+        .slider-item {
+          display: flex;
+          flex-direction: column;
+          padding: 0 34px;
+          height: 205px;
+          border-right: 1px solid rgba(255, 255, 255, 0.1);
+          flex-shrink: 0;
+          max-width: 375px;
+
+          h2 {
+            font-size: 64px;
+            font-weight: 700;
+            color: $themePrimaryColor;
+          }
+          p {
+            display: flex;
+            margin-top: 24px;
+            font-size: 14px;
+            line-height: 160%;
+            color: white;
+            opacity: .7;
+            flex: 1;
+            align-self: stretch;
+          }
+        }
+      }
+    }
+    .slider-buttons {
+      margin-top: 53px;
+      display: flex;
+      :first-child {
+        margin-right: 42px;
+      }
+
+      .disabled {
+        background: #bad1ff;
+        opacity: .1;
+        transition: opacity .2s linear;
+      }
+
+
+      .btn {
+        position: relative;
+        background: $themePrimaryColor;
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+      }
+      :hover {
+        background: #2469ff;
+        transition: background .2s linear;
+      }
+
+      .button-prev::before {
+        content: url("../assets/slider/arrow.png");
+        position: absolute;
+        bottom: 7px;
+        right: 12px;
+        transform: rotate(180deg);
+      }
+
+      .button-next::before{
+        content: url("../assets/slider/arrow.png");
+        position: absolute;
+        top: 7px;
+        left: 12px;
+      }
+    }
+  }
+}
