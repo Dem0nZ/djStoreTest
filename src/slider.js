@@ -1,12 +1,11 @@
 import { slides } from '../slides'
-const sliderWidth = document.querySelector( '.slider-hider' ).offsetWidth
 const slidesUl = document.querySelector('.slides')
 const nextBtn = document.querySelector( '#nextSlide' )
 const prevBtn = document.querySelector( '#prevSlide' )
 
 const slideWidth = 375
 
-const createRightSlide = (slide) => {
+const createSlide = (slide) => {
     let li = document.createElement('li')
     li.className = 'slider-item'
     li.insertAdjacentHTML('afterbegin', `<h2>${slide.h2Right}</h2><p>${slide.pRight}</p>`)
@@ -14,8 +13,8 @@ const createRightSlide = (slide) => {
 }
 
 let position = 0
-let firstSlide = createRightSlide(slides[position])
-let secondSlide = createRightSlide(slides[position + 1])
+let firstSlide = createSlide(slides[position])
+let secondSlide = createSlide(slides[position + 1])
 
 slidesUl.append(firstSlide)
 slidesUl.append(secondSlide)
@@ -33,7 +32,7 @@ const moveNext = () => {
         nextPosition = nextPosition % slides.length
     }
 
-    let newSlide = createRightSlide(slides[nextPosition])
+    let newSlide = createSlide(slides[nextPosition])
     slidesUl.append(newSlide)
 
     firstSlide.ontransitionend = () => {
@@ -60,29 +59,25 @@ const movePrev = () => {
     animationInProgress = true
 
     let prevPosition = position - 1
-    if (prevPosition <= 0) {
+    if (prevPosition < 0) {
         prevPosition = slides.length - 1
     }
-
-    let newSlide = createRightSlide(slides[prevPosition])
-    newSlide.style.marginLeft = `-${slideWidth}px`
+    let newSlide = createSlide(slides[prevPosition])
     slidesUl.prepend(newSlide)
 
-    firstSlide.ontransitionend = () => {
+    newSlide.onanimationend = () => {
         secondSlide.remove()
         secondSlide = firstSlide
         firstSlide = newSlide
 
         position--
-        if (position <= 0) {
+        if (position < 0) {
             position = slides.length - 1
         }
         animationInProgress = false
     }
-    firstSlide.style.marginLeft = `${slideWidth}px`
-    firstSlide.style.transition = 'margin-left ease 1s'
+    newSlide.style = 'animation: move_prev 1s linear 0s alternate;'
 }
 
-
-nextBtn.addEventListener('click', () => moveNext())
-prevBtn.addEventListener('click', () => movePrev())
+nextBtn.onclick = () => moveNext()
+prevBtn.onclick = () => movePrev()
