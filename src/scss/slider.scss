@@ -144,4 +144,20 @@
   }
 }
 
-@keyframes move_prev { from { margin-left: -375px; } to { margin-left: 0; }  }
+@keyframes move_prev {
+  from {
+    margin-left: -375px;
+  }
+  to {
+    margin-left: 0;
+  }
+}
+
+@keyframes opacity_prev {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.2;
+  }
+}
