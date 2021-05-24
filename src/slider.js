@@ -1,10 +1,18 @@
-import { slides } from '../slides'
+import { slides } from './slides'
 const slidesUl = document.querySelector('.slides')
+const slider = document.querySelector('.slider')
 const nextBtn = document.querySelector( '#nextSlide' )
 const prevBtn = document.querySelector( '#prevSlide' )
 
 const slideWidth = 375
 const fadedSlideOpacity = 0.2
+
+const createBackground = (slide) => {
+    let bg = document.createElement('div')
+    bg.className = 'background'
+    bg.insertAdjacentHTML('afterbegin', `<img src=${slide.bgPath}/>`)
+    return bg
+}
 
 const createSlide = (slide) => {
     let li = document.createElement('li')
@@ -18,8 +26,12 @@ let firstSlide = createSlide(slides[position])
 let secondSlide = createSlide(slides[position + 1])
 secondSlide.style.opacity = fadedSlideOpacity.toString()
 
+let currentBg = createBackground(slides[position])
+
 slidesUl.append(firstSlide)
 slidesUl.append(secondSlide)
+
+slider.prepend(currentBg)
 
 let animationInProgress = false
 
@@ -29,12 +41,20 @@ const moveNext = () => {
     }
 
     animationInProgress = true
-    let nextPosition = position + 2
-    if (nextPosition >= slides.length) {
-        nextPosition = nextPosition % slides.length
+    let nextSlidePosition = position + 2
+    if (nextSlidePosition >= slides.length) {
+        nextSlidePosition = nextSlidePosition % slides.length
     }
 
-    let newSlide = createSlide(slides[nextPosition])
+    let nextBackgroundPosition = position + 1
+    if (nextBackgroundPosition >= slides.length) {
+        nextBackgroundPosition = nextBackgroundPosition % slides.length
+    }
+
+    let newBg = createBackground(slides[nextBackgroundPosition])
+    slider.prepend(newBg)
+
+    let newSlide = createSlide(slides[nextSlidePosition])
     newSlide.style.opacity = fadedSlideOpacity.toString()
     slidesUl.append(newSlide)
 
@@ -42,6 +62,9 @@ const moveNext = () => {
         firstSlide.remove()
         firstSlide = secondSlide
         secondSlide = newSlide
+
+        currentBg.remove()
+        currentBg = newBg
 
         position++
         if (position >= slides.length) {
@@ -54,6 +77,9 @@ const moveNext = () => {
     firstSlide.style.transition = 'margin-left ease 3s'
     secondSlide.style.opacity = '1.0'
     secondSlide.style.transition = 'opacity ease 3s'
+
+    currentBg.style.opacity = '0'
+    currentBg.style.transition = 'opacity ease 3s'
 }
 
 const movePrev = () => {
@@ -67,6 +93,10 @@ const movePrev = () => {
     if (prevPosition < 0) {
         prevPosition = slides.length - 1
     }
+
+    let newBg = createBackground(slides[prevPosition])
+    slider.prepend(newBg)
+
     let newSlide = createSlide(slides[prevPosition])
     slidesUl.prepend(newSlide)
 
@@ -77,6 +107,9 @@ const movePrev = () => {
         secondSlide.style = `opacity: ${fadedSlideOpacity}`;
         firstSlide.onanimationend = null
 
+        currentBg.remove()
+        currentBg = newBg
+
         position--
         if (position < 0) {
             position = slides.length - 1
@@ -86,6 +119,7 @@ const movePrev = () => {
 
     newSlide.style = 'animation: move_prev 3s ease 0s alternate;'
     firstSlide.style = 'animation: opacity_prev 3s ease alternate;'
+    currentBg.style = 'animation: opacity_bg 3s ease;'
 }
 
 nextBtn.onclick = () => moveNext()
